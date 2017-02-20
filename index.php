@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>A2 Assignment/title>
+    <title>A2 Assignment</title>
 
 </head>
 
