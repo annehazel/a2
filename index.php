@@ -23,12 +23,12 @@
         <input type="text" id="subtotal" name="subtotal" value="<?=$form->prefill('subtotal', '0.00')?>"/><br/>
         
         <label for="tip" >How much tip would you like to leave?</label><br/>      
-        <select name="tip">
-            <option value=0>No Tip</option>
-            <option value=.1>10%</option>
-            <option value=.15>15%</option>
-            <option value=.20>20%</option>
-            <option value=.25>25%</option>
+        <select name="tip" id="tip">
+            <option value=0 <?=$form->prefillSelect('tip', '0')?>>No Tip</option>
+            <option value=.1 <?=$form->prefillSelect('tip', '.1')?>>10%</option>
+            <option value=.15 <?=$form->prefillSelect('tip', '.15')?>>15%</option>
+            <option value=.20 <?=$form->prefillSelect('tip', '.20')?>>20%</option>
+            <option value=.25 <?=$form->prefillSelect('tip', '.25')?>>25%</option>
         </select>
         <br/>
         
@@ -39,7 +39,9 @@
         
     </form>
     
-    <?php dump($subtotal);
+    <?php
+    dump($_GET);
+    dump($subtotal);
     dump($tip);
     dump($people);
     dump($due);?>

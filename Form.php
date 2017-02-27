@@ -55,6 +55,22 @@ class Form {
             return $default;
         }
     }
+	
+	/**
+	* 
+    * NEW public function to maintain selected value from dropdown options
+    *
+	*/
+	public function prefillSelect($field, $value) {
+       
+	   if($this->request[$field] == $value){
+		echo("selected");
+		
+	   }
+    }
+	
+   	
+	
     /**
 	* Returns True if *either* GET or POST have been submitted
 	*/
