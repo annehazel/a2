@@ -19,7 +19,7 @@
     
     <form>
         
-        <label for="subtotal" >Bill Total:</label><br/>
+        <label for="subtotal" >Bill Total (subtotal):</label><br/>
         <input type="text" id="subtotal" name="subtotal" value="<?=$form->prefill('subtotal', '0.00')?>"/><br/>
         
         <label for="tip" >How much tip would you like to leave?</label><br/>      
@@ -37,39 +37,33 @@
         
          <input type='submit' class='btn'>
          
-    <?php if($errors): ?>     
+    <?php if($form->isSubmitted()): ?>
+    
+        <?php if($errors): ?>     
         
-        <div class='alert alert-danger'>
-            <ul>
-                <?php foreach($errors as $error): ?>
-                <li><?=$error?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>    
+            <div class='alert alert-danger'>
+                <ul>
+                    <?php foreach($errors as $error): ?>
+                    <li><?=$error?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>    
+    
+        <?php else: ?>
+    
+            <div class="alert alert-success">
+                <?=$successMessage?>
+            </div>
+    
+        <?php endif; ?>
+        
+    <?php endif; ?>
     
 
-    <?php elseif($form->isSubmitted()): ?>
-           
-         <div class="alert alert-success">
-            <?=$successMessage?>
-        </div>
-     
-     <?php endif; ?>
          
     </form>
     
-    <?php
-    dump($_GET);
-    dump($subtotal);
-    dump($tip);
-    dump($people);
-    dump($duePerPerson);
-    dump($errors);
-    dump($subtotal);
-    dump($form->sanitize($subtotal));
-    dump($total);
-    dump($successMessage);
-    ?>
+<?php dump($errors); ?>
     
 </body>
 </html>
