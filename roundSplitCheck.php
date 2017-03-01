@@ -12,19 +12,21 @@ $form = new DWA\Form($_GET);
 $subtotal = $form->get('subtotal');
 $tip = $form->get('tip');
 $people = $form->get('people');
-$total = $subtotal * (1+$tip);
-$total = round($total, 2);
+$round = $form->isChosen('round');
 $successMessage = '';
-
+$maxPeople = $total*100;
 
 
 
 
 if ($form->isSubmitted()) {
     
+    $total = getTotal($subtotal, $tip, $round);
+    $amountDue = splitCheck($total, $people);
+    
     $errors = $form->validate(
             [
-            'subtotal' => 'required|numeric',
+            'subtotal' => 'required|numeric|min:.01',
             'tip' => 'required|numeric',
             'people' => 'required|numeric'
             ]
@@ -41,14 +43,28 @@ if ($form->isSubmitted()) {
 # function that calculates what each person owes
 # after incorporating the tip, always rounding up to the nearsest penny
 function splitCheck($total, $people) {
-    
+
     $amountDue = $total/$people;
     $amountDue = round($amountDue, 2, PHP_ROUND_HALF_UP);
+    
+    
     return $amountDue;
 
 } # end function splitCheck
 
+function getTotal($subtotal, $tip, $round = false) {
+    
+    $total = $subtotal * (1+$tip);
+    $total = round($total, 2);
+    
+    if ($round){
+        $total = round($total);
+        return $total;
+    }
+      
+    return $total;
 
+} # end function getTotal
 
 
 

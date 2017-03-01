@@ -20,10 +20,10 @@
     <form>
         
         <label for="subtotal" >Bill Total (subtotal):</label><br/>
-        <input type="text" id="subtotal" name="subtotal" value="<?=$form->prefill('subtotal', '0.00')?>"/><br/>
+        <input type="number" step="0.01" id="subtotal" name="subtotal" value="<?=$form->prefill('subtotal', '0.00')?>" required="required"/><br/>
         
         <label for="tip" >How much tip would you like to leave?</label><br/>      
-        <select name="tip" id="tip">
+        <select name="tip" id="tip" required="required">
             <option value=0 <?=$form->prefillSelect('tip', '0')?>>No Tip</option>
             <option value=.1 <?=$form->prefillSelect('tip', '.1')?>>10%</option>
             <option value=.15 <?=$form->prefillSelect('tip', '.15')?>>15%</option>
@@ -31,6 +31,8 @@
             <option value=.25 <?=$form->prefillSelect('tip', '.25')?>>25%</option>
         </select>
         <br/>
+        
+        <input type="checkbox" name="round" <?php if($round) echo 'CHECKED' ?>> Round the total (including the tip) up to the nearest whole dollar<br>
         
         <label for="people" >The check should be split between how many people?</label><br/>
         <input type="number" id="people" name="people" value="<?=$form->prefill('people', '2')?>" /><br/>
@@ -63,7 +65,9 @@
          
     </form>
     
-<?php dump($errors); ?>
+<?php dump($errors);
+      dump($round);
+?>
     
 </body>
 </html>
