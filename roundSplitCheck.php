@@ -17,16 +17,19 @@ $total = round($total, 2);
 $successMessage = '';
 
 
-$errors = $form->validate(
+
+
+
+if ($form->isSubmitted()) {
+    
+    $errors = $form->validate(
             [
             'subtotal' => 'required|numeric',
             'tip' => 'required|numeric',
             'people' => 'required|numeric'
             ]
             );
-
-
-if ($form->isSubmitted()) {
+    
     if (count($errors) == 0){
         $duePerPerson = splitCheck($total, $people);
         $successMessage = "Including the tip, the bill comes to $" . $total . ". Split between " . $people . " people, each person owes $" . $duePerPerson . ".";
