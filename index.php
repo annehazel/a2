@@ -37,9 +37,24 @@
         
          <input type='submit' class='btn'>
          
+    <?php if($errors): ?>     
+        
+        <div class='alert alert-danger'>
+            <ul>
+                <?php foreach($errors as $error): ?>
+                <li><?=$error?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>    
+    
+
+    <?php elseif($form->isSubmitted()): ?>
+           
          <div class="alert alert-success">
-            <strong>Success!</strong> Indicates a successful or positive action.
+            <?=$successMessage?>
         </div>
+     
+     <?php endif; ?>
          
     </form>
     
@@ -52,6 +67,8 @@
     dump($errors);
     dump($subtotal);
     dump($form->sanitize($subtotal));
+    dump($total);
+    dump($successMessage);
     ?>
     
 </body>
