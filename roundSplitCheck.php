@@ -3,11 +3,15 @@
 require('tools.php');
 require('Form.php');
 
-# new form object
+/**
+* NEW FORM OBJECT
+*/
 $form = new DWA\Form($_GET);
 
-# variables used to collet what was entered in the form fields
-# plus $total to calculate the total bill to be output to the screen
+
+/**
+* VARIABLES FROM FORM SUBMISSION
+*/
 
 $subtotal = $form->get('subtotal');
 $tip = $form->get('tip');
@@ -17,13 +21,14 @@ $successMessage = '';
 $maxPeople = $total*100;
 
 
+/**
+* ERROR HANDLING AND DISPLAY MESSAGES
+*/
 
-
+# If the form has been submitted and there are no errors, run getTotal and splitcheck functions
 if ($form->isSubmitted()) {
     
-    $total = getTotal($subtotal, $tip, $round);
-    $amountDue = splitCheck($total, $people);
-    
+    #check for errors
     $errors = $form->validate(
             [
             'subtotal' => 'required|numeric|min:.01',
@@ -32,26 +37,45 @@ if ($form->isSubmitted()) {
             ]
             );
     
+    #if there are no errors, or the $errors array is empty: 
     if (count($errors) == 0){
+        $total = getTotal($subtotal, $tip, $round);
         $duePerPerson = splitCheck($total, $people);
         $successMessage = "Including the tip, the bill comes to $" . $total . ". Split between " . $people . " people, each person owes $" . $duePerPerson . ".";
         return $duePerPerson;
      } 
 }
 
+/**
+* FUNCTIONS
+*/
 
-# function that calculates what each person owes
-# after incorporating the tip, always rounding up to the nearsest penny
+/**
+* The splitCheck function takes the total (found by the getTotal function) and divides it by
+* the number of people indicated by the user.
+*
+* The amount each person owes is always rounded up in order to assure the entire bill is covered
+* 
+*/
 function splitCheck($total, $people) {
 
     $amountDue = $total/$people;
     $amountDue = round($amountDue, 2, PHP_ROUND_HALF_UP);
     
-    
     return $amountDue;
 
 } # end function splitCheck
 
+
+/**
+* The getTotal function is used to get the total that the application should use and display,
+* adding in the tip amount (indicated by the user) and rounding of to the nearest dollar 
+* if rounding up is indicated by the user.
+* 
+*  The $round variable holds a boolean value, indicating whether the user wants the total to be rounded off
+*  to the nearest dollar.
+*/
+   
 function getTotal($subtotal, $tip, $round = false) {
     
     $total = $subtotal * (1+$tip);
