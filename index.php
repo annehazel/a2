@@ -36,7 +36,11 @@
         <input type="number" id="people" name="people" value="<?=$form->prefill('people', '2')?>" /><br/>
         
          <input type='submit' class='btn'>
-        
+         
+         <div class="alert alert-success">
+            <strong>Success!</strong> Indicates a successful or positive action.
+        </div>
+         
     </form>
     
     <?php
@@ -44,7 +48,11 @@
     dump($subtotal);
     dump($tip);
     dump($people);
-    dump($due);?>
+    dump($duePerPerson);
+    dump($errors);
+    dump($subtotal);
+    dump($form->sanitize($subtotal));
+    ?>
     
 </body>
 </html>

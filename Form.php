@@ -160,7 +160,7 @@ class Form {
 	* Returns boolean if given value contains only numbers
 	*/
     private function numeric($value) {
-        return ctype_digit(str_replace(' ','', $value));
+        return is_numeric(str_replace(' ','', $value));
     }
     /**
 	* Returns boolean if the given value is not blank
