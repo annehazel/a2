@@ -101,6 +101,7 @@ class Form {
         $errors = [];
         foreach($fieldsToValidate as $fieldName => $rules) {
             # Each rule is separated by a |
+            
             $rules = explode('|', $rules);
             foreach($rules as $rule) {
                 # Get the value for this field from the request
@@ -137,7 +138,7 @@ class Form {
             'required' => ' is required.',
             'email' => ' is not a valid email address.',
             'min' => ' has to be greater than '.$parameter,
-            'max' => ' has to be less than '.$parameter,
+            'max' => ' has to be less than '.$parameter.' to split the check',
         ];
         # If a message for the rule was found, use that, otherwise default to " has an error"
         $message = isset($language[$rule]) ? $language[$rule] : ' has an error.';

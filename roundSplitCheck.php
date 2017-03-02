@@ -18,7 +18,7 @@ $tip = $form->get('tip');
 $people = $form->get('people');
 $round = $form->isChosen('round');
 $successMessage = '';
-$maxPeople = $total*100;
+
 
 
 /**
@@ -28,18 +28,21 @@ $maxPeople = $total*100;
 # If the form has been submitted and there are no errors, run getTotal and splitcheck functions
 if ($form->isSubmitted()) {
     
-    #check for errors
+    $total = getTotal($subtotal, $tip, $round);
+    $maxPeople = $total*100 +1;
+    
+    #check for errors, use $maxPeople to make sure the total is divisible but at least .01 per person
     $errors = $form->validate(
             [
             'subtotal' => 'required|numeric|min:.01',
             'tip' => 'required|numeric',
-            'people' => 'required|numeric'
+            'people' => 'required|numeric|max:' . $maxPeople,
             ]
             );
     
     #if there are no errors, or the $errors array is empty: 
     if (count($errors) == 0){
-        $total = getTotal($subtotal, $tip, $round);
+        #$total = getTotal($subtotal, $tip, $round);
         $duePerPerson = splitCheck($total, $people);
         $successMessage = "Including the tip, the bill comes to $" . $total . ". Split between " . $people . " people, each person owes $" . $duePerPerson . ".";
         return $duePerPerson;
