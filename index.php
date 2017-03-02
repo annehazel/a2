@@ -14,10 +14,11 @@
 
 <body>
 
+<div class="container">
+    
     <h1>Split the Check!</h1>
-    
-    
-    <form>
+      
+    <form method="get">
         
         <label for="subtotal" >Bill Total (subtotal)<span class="required">*</span>:</label><br/>
         <input type="number" step="0.01" id="subtotal" name="subtotal" value="<?=$form->prefill('subtotal', '0.00')?>" /><br/>
@@ -66,6 +67,7 @@
     <div>
         <p><span class="required">*</span> Indicates a required field.</p>
     </div>
-    
+</div>  <!-- end container class -->
+
 </body>
 </html>
